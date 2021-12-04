@@ -1,45 +1,64 @@
 
 package com.example.weatherapp.data.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
+
 import java.util.List;
 
+import com.example.weatherapp.data.local.converters.CoordConverter;
+import com.example.weatherapp.data.local.converters.ExampleConverter;
+import com.example.weatherapp.data.local.converters.CloudsConverter;
+import com.example.weatherapp.data.local.converters.ListWeatherConverter;
+import com.example.weatherapp.data.local.converters.MainConverter;
+import com.example.weatherapp.data.local.converters.SysConverter;
+import com.example.weatherapp.data.local.converters.WindConverter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@Entity()
+@TypeConverters({ExampleConverter.class})
 public class Example {
-
-    @SerializedName("coord")
+/*    @SerializedName("coord")
     @Expose
-    private Coord coord;
+    @TypeConverters({CoordConverter.class})
+    private Coord coord;*/
     @SerializedName("weather")
     @Expose
+    @TypeConverters({ListWeatherConverter.class})
     private List<Weather> weather = null;
     @SerializedName("base")
     @Expose
     private String base;
     @SerializedName("main")
     @Expose
+    @TypeConverters({MainConverter.class})
     private Main main;
     @SerializedName("visibility")
     @Expose
     private Integer visibility;
     @SerializedName("wind")
     @Expose
+    @TypeConverters({WindConverter.class})
     private Wind wind;
     @SerializedName("clouds")
     @Expose
+    @TypeConverters({CloudsConverter.class})
     private Clouds clouds;
     @SerializedName("dt")
     @Expose
     private Integer dt;
     @SerializedName("sys")
     @Expose
+    @TypeConverters({SysConverter.class})
     private Sys sys;
     @SerializedName("timezone")
     @Expose
     private Integer timezone;
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private Integer id;
     @SerializedName("name")
     @Expose
@@ -47,14 +66,14 @@ public class Example {
     @SerializedName("cod")
     @Expose
     private Integer cod;
-
-    public Coord getCoord() {
+    @TypeConverter
+/*    public Coord getCoord() {
         return coord;
     }
 
     public void setCoord(Coord coord) {
         this.coord = coord;
-    }
+    }*/
 
     public List<Weather> getWeather() {
         return weather;

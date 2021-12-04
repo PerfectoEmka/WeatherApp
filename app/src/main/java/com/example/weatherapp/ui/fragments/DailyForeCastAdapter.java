@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -7,15 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapp.data.models.Weather;
+import com.example.weatherapp.data.models.daily.forecast;
 import com.example.weatherapp.databinding.ItemDailyForecastBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DailyForeCastAdapter extends RecyclerView.Adapter<DailyForeCastAdapter.ViewHolder>{
 
-    private List<Weather> list;
+    private List<forecast> list;
 
-    public void setList(List<Weather> list) {
+    public void setList(List<forecast> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -50,8 +53,9 @@ public class DailyForeCastAdapter extends RecyclerView.Adapter<DailyForeCastAdap
             binding = itemView;
         }
 
-        public void onBind(Weather weather) {
-            binding.dateTV.setText(weather.getMain());
+        public void onBind(forecast forecast) {
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd");
+            binding.dateTV.setText(sdf.format(forecast.time));
         }
     }
 }

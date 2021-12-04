@@ -59,6 +59,10 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.36"
     annotationProcessor "com.google.dagger:hilt-compiler:2.36"
 
+    def room_version = "2.4.0-alpha03"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
