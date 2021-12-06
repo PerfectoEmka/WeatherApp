@@ -29,10 +29,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
-
-import java.util.ArrayList;
 
 public class CitiesFragment extends BaseFragment<FragmentCitiesBinding> implements OnMapReadyCallback, LocationListener {
 
@@ -42,7 +40,6 @@ public class CitiesFragment extends BaseFragment<FragmentCitiesBinding> implemen
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
     private LocationManager locationManager;
-    private ArrayList<LatLng> list = new ArrayList<>();
 
     public CitiesFragment() {
 
@@ -58,7 +55,7 @@ public class CitiesFragment extends BaseFragment<FragmentCitiesBinding> implemen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-        SupportMapFragment mapFragment = (SupportMapFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragment);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragment);
         mapFragment.getMapAsync(this);
     }
 
@@ -69,13 +66,6 @@ public class CitiesFragment extends BaseFragment<FragmentCitiesBinding> implemen
 
     @Override
     protected void setupUI() {
-        binding.btnSelect.setOnClickListener(v -> {
-            if (binding.etText.getText() != null) {
-                String city = binding.etText.getText().toString();
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host);
-                navController.navigate((NavDirections) CitiesFragmentDirections.actionCitiesFragmentToMainFragment22(city));
-            }
-        });
     }
 
     private void getCurrentLocation() {
@@ -120,29 +110,32 @@ public class CitiesFragment extends BaseFragment<FragmentCitiesBinding> implemen
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Log.e(TAG, "onMapClick: " + latLng.toString());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
+                mMap.clear();
                 mMap.addMarker(markerOptions);
-                list.add(latLng);
-                mMap.addPolyline(new PolylineOptions()
-                        .addAll(list)
-                        .width(4)
-                        .color(Color.BLUE)
-                );
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
                         CameraPosition.builder()
                                 .zoom(6f)
                                 .target(latLng)
                                 .build()
                 ));
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host);
+                        navController.navigate((NavDirections) CitiesFragmentDirections
+                                .actionCitiesFragmentToMainFragment22(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude)));
+                        return false;
+                    }
+                });
             }
         });
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        MarkerOptions options = new MarkerOptions();
+        /*MarkerOptions options = new MarkerOptions();
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         options.position(latLng);
         mMap.clear();
@@ -151,7 +144,7 @@ public class CitiesFragment extends BaseFragment<FragmentCitiesBinding> implemen
                 .builder()
                 .target(latLng)
                 .build()
-        ));
+        ));*/
     }
 
     @Override

@@ -14,7 +14,8 @@ public interface WeatherApi {
 
     @GET("weather?")
     Call<Example> getCurrentForeCast(
-            @Query("q") String city,
+            @Query("lat") String lat,
+            @Query("lon") String lon,
             @Query("appid") String appId,
             @Query("units") String metric
     );

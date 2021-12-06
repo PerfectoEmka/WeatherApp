@@ -18,18 +18,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class MainFragmentViewModel extends ViewModel {
     private MainRepository repository;
     public LiveData<Resource<Example>> liveData;
-    public LiveData<Resource<List<forecast>>> dailyLiveData;
+    //public LiveData<Resource<List<forecast>>> dailyLiveData;
 
     @Inject
     public MainFragmentViewModel(MainRepository repository) {
         this.repository = repository;
     }
 
-    public void fetchCurrentForeCast(String city) {
-        liveData = repository.getCurrentForeCast(city);
+    public void fetchCurrentForeCast(String lat, String lon) {
+        liveData = repository.getCurrentForeCast(lat, lon);
     }
 
-    public void fetchDailyForeCast(String city){
+    /*public void fetchDailyForeCast(String city){
         dailyLiveData = repository.getDailyForeCast(city);
-    }
+    }*/
 }

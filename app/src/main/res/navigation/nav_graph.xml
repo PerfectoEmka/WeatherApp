@@ -9,10 +9,15 @@
         android:name="com.example.weatherapp.ui.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
-        <argument android:name="cityName"
+        <argument android:name="latitude"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue="London"
+            android:defaultValue="42.8746"
+            />
+        <argument android:name="longitude"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="74.5698"
             />
         <action
             android:id="@+id/action_mainFragment2_to_citiesFragment2"
@@ -28,7 +33,11 @@
         <action
             android:id="@+id/action_citiesFragment_to_mainFragment22"
             app:destination="@id/mainFragment2">
-            <argument android:name="cityName"
+            <argument android:name="latitude"
+                app:argType="string"
+                app:nullable="true"
+                />
+            <argument android:name="longitude"
                 app:argType="string"
                 app:nullable="true"
                 />

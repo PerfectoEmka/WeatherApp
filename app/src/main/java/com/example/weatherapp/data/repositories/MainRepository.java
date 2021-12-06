@@ -26,11 +26,11 @@ public class MainRepository {
         this.dao = dao;
     }
 
-    public MutableLiveData<Resource<Example>> getCurrentForeCast(String city) {
+    public MutableLiveData<Resource<Example>> getCurrentForeCast(String lat, String lon) {
 
         MutableLiveData<Resource<Example>> liveData = new MutableLiveData<>();
         liveData.setValue(Resource.loading());
-        api.getCurrentForeCast(city, "5d1469e6f801815a95180f4088719ef2", "metric").enqueue(new Callback<Example>() {
+        api.getCurrentForeCast(lat, lon, "5d1469e6f801815a95180f4088719ef2", "metric").enqueue(new Callback<Example>() {
             @Override
             public void onResponse(@NonNull Call<Example> call, @NonNull Response<Example> response) {
                 if (response.isSuccessful() && response.body() != null){

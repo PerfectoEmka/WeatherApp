@@ -65,8 +65,8 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
     @Override
     protected void setupUI() {
         viewModel = new ViewModelProvider(requireActivity()).get(MainFragmentViewModel.class);
-        viewModel.fetchCurrentForeCast(args.getCityName());
-        viewModel.fetchDailyForeCast(args.getCityName());
+        viewModel.fetchCurrentForeCast(args.getLatitude(), args.getLongitude());
+        //viewModel.fetchDailyForeCast(args.getCityName());
 
         binding.cityBtn.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host);
@@ -129,7 +129,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                 binding.dayTimeTV.setText(sdf.format(example.getDt()));
             }
         });
-        viewModel.dailyLiveData.observe(getViewLifecycleOwner(), new Observer<Resource<List<forecast>>>() {
+        /*viewModel.dailyLiveData.observe(getViewLifecycleOwner(), new Observer<Resource<List<forecast>>>() {
             @Override
             public void onChanged(Resource<List<forecast>> listResource) {
                 switch (listResource.status){
@@ -148,6 +148,6 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                     }
                 }
             }
-        });
+        });*/
     }
 }
